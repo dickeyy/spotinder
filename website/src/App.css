@@ -1,0 +1,101 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #191414;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.HeaderText {
+  color: #1DB954;
+  font-size: 60px;
+  font-weight:  900;
+  margin-bottom: -20px;
+
+}
+
+.albumCover {
+  height: 400px;
+  width: 400px;
+  border-radius: 13px;
+}
+
+.fa-play {
+  color: #1DB954;
+}
+
+.songTite {
+  font-weight: 700;
+  color: white;
+  font-size: 40px;
+}
+
+.songArtist {
+  color: #757575;
+  font-size: 28px;
+  margin-top: -20px;
+  font-weight: 500;
+}
+
+.likeContainer {
+  flex-direction: row;
+}
+
+.heartBtn {
+  margin-left: 70px;
+  margin-right: 70px;
+  color: #757575;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.heartBtn:hover {
+  color: rgb(137, 162, 245)
+}
+
+.dislikeBtn:hover {
+  color: #ff4444
+}
+
+.dislikeBtn {
+  margin-left: 70px;
+  margin-right: 70px;
+  color: #757575;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.logout {
+  margin-top: 50px;
+  background-color: #191414;
+  border: none;
+  color: white;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.logout:hover {
+  color: #1DB954;
+  cursor: pointer;
+}
+
+.login {
+  background-color: #191414;
+  border: none;
+  color: white;
+  font-size: 39px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.login:hover {
+  color: #1DB954;
+  cursor: pointer;
+}

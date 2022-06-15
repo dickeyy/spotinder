@@ -1,0 +1,12 @@
+{
+  "hosting": {
+    "site": "spotinder",
+    "cleanUrls": true,
+    "public": "build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
