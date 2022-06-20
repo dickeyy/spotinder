@@ -2,9 +2,6 @@ import './App.css';
 import {useEffect, useState} from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import axios from 'axios';
-import dotenv from 'dotenv'
-
-dotenv.config()
 
 const sleep = (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
