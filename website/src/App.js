@@ -2,6 +2,9 @@ import './App.css';
 import {useEffect, useState} from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import axios from 'axios';
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const sleep = (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -9,9 +12,8 @@ const sleep = (milliseconds) => {
 
 function App() {
 
-  const CLIENT_ID = "3f95c02bbe114a0ab91b09552fedb230"
-  const REDIRECT_URI = "https://spotinder.dickey.gg"
-  // const REDIRECT_URI = "http://localhost:3000"
+  const CLIENT_ID = 'YOUR_CLIENT_ID'
+  const REDIRECT_URI = "http://localhost:3000"
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
   const RESPONSE_TYPE = "token"
   const SCOPE = 'playlist-read-private playlist-modify-private playlist-modify-public'
