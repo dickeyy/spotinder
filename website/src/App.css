@@ -2,13 +2,34 @@
   text-align: center;
 }
 
+body {
+  background-color: #191414;
+}
+
+.backgroundImg {
+  width: 100%;
+  height: 100vw;
+}
+
 .App-header {
   background-color: #191414;
-  min-height: 100vh;
+  min-height: fit-content;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
+}
+
+.body {
+
+  background-color: #191414;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
 }
 
 .HeaderText {
@@ -23,32 +44,50 @@
   height: 400px;
   width: 400px;
   border-radius: 13px;
+  max-width: 90vw;
+  min-width: 20vw;
 }
 
 .fa-play {
   color: #1DB954;
 }
 
+.songContainer {
+  max-width: 90vw;
+  min-width: none;
+  overflow-x: hidden;
+}
+
 .songTite {
+  margin-top: 30px;
   font-weight: 700;
   color: white;
   font-size: 40px;
+  text-decoration: none;
+}
+
+.songTite:hover {
+  text-decoration: underline;
+  color: #1DB954;
 }
 
 .songArtist {
+  margin-top: -1px;
+  margin-top: 5px;
   color: #757575;
   font-size: 28px;
-  margin-top: -20px;
   font-weight: 500;
 }
 
 .likeContainer {
   flex-direction: row;
+  max-width: 100vw;
+  min-width: 30vw;
+  margin: none;
 }
 
 .heartBtn {
-  margin-left: 70px;
-  margin-right: 70px;
+  float: right;
   color: #757575;
   background-color: transparent;
   border: none;
@@ -64,8 +103,7 @@
 }
 
 .dislikeBtn {
-  margin-left: 70px;
-  margin-right: 70px;
+  float: left;
   color: #757575;
   background-color: transparent;
   border: none;
@@ -98,4 +136,58 @@
 .login:hover {
   color: #1DB954;
   cursor: pointer;
+}
+
+.playistCont {
+  background-color: black;
+  color: white;
+  width: 60vw;
+  height: 90px;
+  margin-bottom: 20px;
+  border-radius: 13px;
+  flex-direction: row;
+  text-align: center;
+  display: inline-block;
+  vertical-align:top;
+}
+
+.playistCont:hover {
+  cursor: pointer;
+  background-color: rgba(26, 160, 73, 0.705);
+}
+
+.playlistImage {
+  height: 70px;
+  position: absolute;
+  width: 70px;
+  left: 40vw;
+  margin-top: 10px;
+  border-radius: 13px;
+  margin-bottom: 10px;
+}
+
+.playlistTitle {
+  position: relative;
+  left: 3vw;
+  margin-top: 30px;
+}
+
+span {
+  left: 100
+}
+
+.genreCont {
+  background-color: black;
+  margin-bottom: 10px;
+  color: white;
+  width: 20vw;
+  padding-left: 50px;
+  padding-right: 50px;
+  border-radius: 13px;
+  font-size: 30px;
+}
+
+.genreCont:hover {
+  cursor: pointer;
+  background-color: rgba(26, 160, 73, 0.705);
 }

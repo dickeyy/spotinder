@@ -3,9 +3,6 @@ import {useEffect, useState} from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import axios from 'axios';
 
-const randNum = Math.floor(Math.random() * 100)
-const randomOffset = Math.floor(Math.random() * randNum);
-
 const sleep = (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
@@ -17,14 +14,20 @@ function App() {
   // const REDIRECT_URI = "http://localhost:3000"
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
   const RESPONSE_TYPE = "token"
+  const SCOPE = 'playlist-read-private playlist-modify-private playlist-modify-public'
 
   let [token, setToken] = useState("")
   const [songs, setArtists ] = useState([])
+  let [playlistId, setPlaylist] = useState("")
+  const [playlists, setAllPlaylists] = useState([])
+  let [genre, setGenres] = useState("")
+  const [allGenres, setAllGenres] = useState([])
 
   useEffect(() => {
     
       const hash = window.location.hash
       let token = window.localStorage.getItem("token")
+      let playlistId = window.localStorage.getItem("playlist_id")
 
       if (!token && hash) {
           token = hash.substring(1).split("&").find(elem => elem.startsWith("access_token")).split("=")[1]
@@ -39,106 +42,177 @@ function App() {
 
   const logout = () => {
       setToken("")
+      setPlaylist("")
+      setGenres("")
       window.localStorage.removeItem("token")
+      window.localStorage.removeItem("playlist_id")
+      window.localStorage.removeItem("genre")
+      window.location.reload()
   }
 
   const getSong = async () => {
 
     const token = window.localStorage.getItem("token")
+    var genre = window.localStorage.getItem('genre')
 
-    const letterList = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-    const letter = letterList[Math.floor(Math.random() * letterList.length)]
+    if (genre == null) genre = 'pop'
+
+    const randNum = Math.floor(Math.random() * 500)
+    const randomOffset = Math.floor(Math.random() * randNum);
   
-    const {data} = await axios.get("https://api.spotify.com/v1/search", {
+    const {data} = await axios.get("https://api.spotify.com/v1/recommendations", {
         headers: {
             Authorization: `Bearer ${token}`
         },
         params: {
-            q: getRandomSearch(),
-            type: "track",
             limit: 1,
-            offset: randomOffset
+            seed_genres: genre 
         }
     })
 
-    setArtists(data.tracks.items)
-    // console.log(data.tracks.items)
+    setArtists(data.tracks)
+    console.log(data)
     
   }
 
   const renderSongData = () => {
 
-    if (songs === []) {
-      getSong().then(() => {
-        return songs.map( songs => (
-
-          // {artist.images.length ? <img width={"100%"} src={artist.images[0].url} alt=""/> : <div>No Image</div>}
-          // {artist.name}
-
-
-      <div className="songContainer">
-
-    
-    
-        <div className="imgCont">
-          <img alt='Album Cover' className="albumCover" src={songs.album.images[0].url}></img>
-        </div>
-
-      <p className="songTite">{songs.name}</p>
-
-      <p className="songArtist">{songs.artists[0].name}</p>
-
-        <div className="likeContainer">
-
-        <button className="fa fa-solid fa-ban fa-5x dislikeBtn" onClick={getSong}></button>
-
-                <a href={songs.external_urls.spotify} target='_blank' class="icon" title="Play on Spotify">
-                  <i class="fa fa-play fa-5x"></i>
-                </a>
-       
-        <button className="fa fa-solid fa-heart fa-5x heartBtn" onClick={getSong}></button>
-
-        </div>
-
-      </div>
-
-  ))
-      })
-    } 
-
     return songs.map( songs => (
 
-            // {artist.images.length ? <img width={"100%"} src={artist.images[0].url} alt=""/> : <div>No Image</div>}
-            // {artist.name}
+        <div className="viewContainer">
 
 
-        <div className="songContainer">
+          <div className="songContainer">
 
-      
-      
           <div className="imgCont">
             <img alt='Album Cover' className="albumCover" src={songs.album.images[0].url}></img>
           </div>
 
-        <p className="songTite">{songs.name}</p>
+          <br></br>
+
+        <a className="songTite" href={songs.external_urls.spotify} target="_blank" title="Open in Spotify">{songs.name}</a>
 
         <p className="songArtist">{songs.artists[0].name}</p>
 
-          <div className="likeContainer">
-
-          <button className="fa fa-solid fa-ban fa-5x dislikeBtn" onClick={getSong}></button>
-
-                  <a href={songs.external_urls.spotify} target='_blank' class="icon" title="Play on Spotify">
-                    <i class="fa fa-play fa-5x"></i>
-                  </a>
-         
-          <button className="fa fa-solid fa-heart fa-5x heartBtn" onClick={getSong}></button>
-
-          </div>
-
+        </div>
         </div>
 
     ))
+  }
+
+  const renderButtons = () => {
+    return (
+      <div className="likeContainer">
+
+          <button className="fa fa-solid fa-ban fa-4x dislikeBtn" onClick={getSong}></button>
+
+          <iframe title="Song Embed" style={{borderRadius: 13}} src={"https://open.spotify.com/embed/track/" + songs[0].id} width="80" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+          <button className="fa fa-solid fa-heart fa-4x heartBtn" onClick={() => {
+              const token = window.localStorage.getItem("token")
+              const playlistId = window.localStorage.getItem("playlist_id")
+          
+
+              fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?`+ new URLSearchParams({
+                uris: songs[0].uri,
+                }), {
+                method: 'POST',
+                headers: {
+                },
+                headers: new Headers({
+                  'Authorization': `Bearer ${token}`
+                })
+              }).then(() => {
+                getSong()
+              })
+        
+          }}></button>
+
+          </div>
+
+    )
+  }
+
+  const renderPlaylists = () => { 
+    return playlists.map( playlists => (
+      <div className="playistCont" key={playlists.id} id={playlists.id} onClick={(e) => {
+
+        let playlistId = window.localStorage.getItem("playlist_id")
+        console.log(e.currentTarget.id)
+
+        if (!playlistId) {
+          playlistId = e.currentTarget.id
+
+            window.location.hash = ""
+            window.localStorage.setItem("playlist_id", playlistId)
+        }
+
+        setPlaylist(e.currentTarget.id)
+        console.log(window.localStorage.getItem("playlist_id"))
+
+
+      }}>
+        <img src={playlists.images[0].url} className="playlistImage"></img>
+        <p className="playlistTitle"><span>{playlists.name}</span></p>
+      </div>
+    ))
+   }
+
+  const getPlaylists = async () => {
+
+    const token = window.localStorage.getItem("token")
+  
+    const {data} = await axios.get("https://api.spotify.com/v1/me/playlists", {
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        params: {
+          limit: 20
+        }
+    })
+
+    setAllPlaylists(data.items)
+
+  }
+
+  const renderGenres = () => {
+
+    return allGenres.map( genre => (
+      <div className="genreCont" key={genre} id={genre} onClick={(e) => {
+
+        let genre = window.localStorage.getItem("genre")
+        console.log(e.currentTarget.id)
+
+        if (!genre) {
+          genre = e.currentTarget.id
+
+            window.location.hash = ""
+            window.localStorage.setItem("genre", genre)
+        }
+
+        setGenres(e.currentTarget.id)
+        console.log(window.localStorage.getItem("genre"))
+
+
+      }}>
+        <p className="genreTitle">{genre}</p>
+      </div>
+    ))
+
+  }
+
+  const getAllGenres = async () => {
+
+    const token = window.localStorage.getItem("token")
+  
+    const {data} = await axios.get("	https://api.spotify.com/v1/recommendations/available-genre-seeds", {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+
+    setAllGenres(data.genres)
+
   }
 
   useEffect(() => {
@@ -159,8 +233,12 @@ function App() {
              setToken(token)
 
              sleep(200).then(() => {
-               getSong().then(() => {
-                 console.log('ok')
+               getAllGenres().then(() => {
+                  getPlaylists().then(() => {
+                    getSong().then(() => {
+                      console.log('ok')
+                    })
+                  })
                })
              })
 
@@ -186,17 +264,32 @@ function App() {
       <script src='https://kit.fontawesome.com/764149e8dd.js'></script>
       <header className="App-header">
         <p className="HeaderText">
-          Spotify Tinder
+          Spotinder
         </p>
-        
         <br></br>
         <br></br>
         <br></br>
 
-        {renderSongData()}
+      </header>
+
+      <div className="body">
+
+      {!genre?
+        renderGenres(): <p style={{ display: 'none' }}></p>
+      }
+
+        {!playlistId && genre? 
+          renderPlaylists(): <p style={{ display: 'none' }}></p>
+        }
+
+        {playlistId? renderSongData(): <p style={{ display: 'none' }}></p>}
+
+      {playlistId?
+        renderButtons(): <p style={{ display: 'none' }}></p>
+      }
 
           {!token ?
-          <a className="login" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}>Login to Spotify</a>: <button className="logout" onClick={logout}>Logout</button>}
+          <a className="login" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${encodeURIComponent(SCOPE)}`}>Login to Spotify</a>: <button className="logout" onClick={logout}>Logout</button>}
        
             
 
@@ -209,7 +302,8 @@ function App() {
         <br>
         </br>
         <br></br>
-      </header>
+      </div>
+
     </div>
   );
 }
