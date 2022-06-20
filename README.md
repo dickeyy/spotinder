@@ -25,4 +25,8 @@ Simply click the logout button on the bottom of the screen and login again. If y
 `6.` Run `npm i` <br>
 `7.` After all the packages install, run `npm start` <br>
 <br>
-After step 6, a development server will be opened on your machine and you can follow the **How to use it** section for more directions.
+After step 7, a development server will be opened on your machine and you can follow the **How to use it** section for more directions.
+<br>
+<br>
+<br>
+*Notice: Use of this application is allowed however redistribution is prohibited under the License. Any modifications to this application will need to be submited via Pull Requests. Any reuse of code will need to be accredited to Kyle Dickey.*
