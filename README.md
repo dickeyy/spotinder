@@ -19,8 +19,8 @@ Simply click the logout button on the bottom of the screen and login again. If y
 ## To run the website locally
 `1.` Clone the repository to your local machine <br>
 `2.` Open up `../website/src/App.js` <br>
-`3.` Go to [Spotify's Developer Portal](https://developer.spotify.com/dashboard) and create a Spotify app
-`4.` Copy your `Client ID` and replace `YOUR_CLIENT_ID` on line 15 of `../website/src/App.js`
+`3.` Go to [Spotify's Developer Portal](https://developer.spotify.com/dashboard) and create a Spotify app <br>
+`4.` Copy your `Client ID` and replace `YOUR_CLIENT_ID` on line 15 of `../website/src/App.js` <br>
 `5.` Open a terminal at the website direcory (`../website`) <br>
 `6.` Run `npm i` <br>
 `7.` After all the packages install, run `npm start` <br>
