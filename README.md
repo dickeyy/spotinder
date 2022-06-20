@@ -17,11 +17,11 @@ Simply click the logout button on the bottom of the screen and login again. If y
 <br>
 <br>
 ## To run the website locally
-`1.` Clone the repository to your local machine
-`2.` Open up `../website/src/App.js`
-`3.` Comment out line `13` and uncomment line `14` (this changes the redirect uri for Spotify's API to your machine)
-`4.` Open a terminal at the website direcory (`../website`)
-`5.` Run `npm i`
-`6.` After all the packages install, run `npm start`
+`1.` Clone the repository to your local machine <br>
+`2.` Open up `../website/src/App.js` <br>
+`3.` Comment out line `13` and uncomment line `14` (this changes the redirect uri for Spotify's API to your machine) <br>
+`4.` Open a terminal at the website direcory (`../website`) <br>
+`5.` Run `npm i` <br>
+`6.` After all the packages install, run `npm start` <br>
 <br>
 After step 6, a development server will be opened on your machine and you can follow the **How to use it** section for more directions.
