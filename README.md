@@ -13,7 +13,7 @@ You will be recomended random songs based off the genre you selected. Any songs 
 <br>
 <br>
 ## To select a new genre / playlist
-Simply click the logout button on the bottom of the screen and login again. If you refresh the page, you will be prompted to select a genre and playlist again, however it may not change properly.
+Simply click the 'Reset' button on the bottom of the screen and login again. If you refresh the page, you will be prompted to select a genre and playlist again, however it may not change properly.
 <br>
 <br>
 ## To run the website locally
