@@ -55,9 +55,6 @@ function App() {
     var genre = window.localStorage.getItem('genre')
 
     if (genre == null) genre = 'pop'
-
-    const randNum = Math.floor(Math.random() * 500)
-    const randomOffset = Math.floor(Math.random() * randNum);
   
     const {data} = await axios.get("https://api.spotify.com/v1/recommendations", {
         headers: {
@@ -89,7 +86,7 @@ function App() {
 
           <br></br>
 
-        <a className="songTite" href={songs.external_urls.spotify} target="_blank" title="Open in Spotify">{songs.name}</a>
+        <a className="songTite" href={songs.external_urls.spotify} target="_blank" rel="noreferrer" title="Open in Spotify">{songs.name}</a>
 
         <p className="songArtist">{songs.artists[0].name}</p>
 
@@ -116,8 +113,6 @@ function App() {
                 uris: songs[0].uri,
                 }), {
                 method: 'POST',
-                headers: {
-                },
                 headers: new Headers({
                   'Authorization': `Bearer ${token}`
                 })
@@ -151,7 +146,7 @@ function App() {
 
 
       }}>
-        <img src={playlists.images[0].url} className="playlistImage"></img>
+        <img src={playlists.images[0].url} className="playlistImage" alt='Playlist Cover'></img>
         <p className="playlistTitle"><span>{playlists.name}</span></p>
       </div>
     ))
@@ -254,9 +249,6 @@ function App() {
     }
   }, []);
 
-
-  // getSong()
-
   return (
     <div className="App">
       <script src="https://sdk.scdn.co/spotify-player.js"></script>
@@ -288,19 +280,12 @@ function App() {
       }
 
           {!token ?
-          <a className="login" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${encodeURIComponent(SCOPE)}`}>Login to Spotify</a>: <button className="logout" onClick={logout}>Logout</button>}
+          <a className="login" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${encodeURIComponent(SCOPE)}`}>Login to Spotify</a>: <button className="logout" onClick={logout}>Reset</button>}
        
             
 
         <br>
         </br>
-        <br></br>
-        <br>
-        </br>
-        <br></br>
-        <br>
-        </br>
-        <br></br>
       </div>
 
     </div>
@@ -308,15 +293,3 @@ function App() {
 }
 
 export default App;
-
-// Functions
-
-function getRandomSearch() {
-  // A list of all characters that can be chosen.
-  const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-  
-  // Gets a random character from the characters string.
-  const randomCharacter = characters.charAt(Math.floor(Math.random() * characters.length));
-
-  return randomCharacter;
-}
